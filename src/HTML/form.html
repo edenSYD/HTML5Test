@@ -1,0 +1,99 @@
+<!--Create by syd on 2018/9/27 14:06.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+</head>
+<body>
+   <!--表单-->
+   <form action="http://www.baidu.com" method="get">
+       <input type="text" name="userName">
+       <input type="submit" value="提交到服务器">
+   </form>
+   <h4>网址服务器介绍</h4>
+   <h3>表单登录类型界面</h3>
+   <form action="#">
+       <h4>1.type = text,输入框,默认20个字符左右</h4>
+       用户名: <input type="text" name="user">
+       密码: <input type="password" name="pass">
+
+       <h4>2.type-submit 数据提交</h4>
+       登录:<input type="submit" value="登录">
+       注册:<input type="submit" value="注册">
+
+       <h4>3.type = image 图片</h4>
+       <input type="image" src="../img/beautiful.jpg" width="100" height="30">
+
+       <h4>4.单选框 type = radio</h4>
+       学历:
+       <input type="radio" name="education" value="0" checked>小学
+       <input type="radio" name="education" value="1" checked>初中
+       <input type="radio" name="education" value="2" checked>高中
+       <input type="radio" name="education" value="3" checked>大学
+
+       <h4>5.复选框 type = checkbox</h4>
+       爱好:
+       <input type="checkbox" name="hobby" value="0">吃饭
+       <input type="checkbox" name="hobby" value="1">sleep
+       <input type="checkbox" name="hobby" value="2">打豆豆
+
+       <h4>6. type = button,不会发出action事件,单独用js交互</h4>
+       <input type="button" value="我是按钮">
+
+       <h4>7. type = file 文件上传,添加附件</h4>
+       <input type="file" value="选择文件">
+
+       <h4>8. type = reset 重置操作</h4>
+       <input type="reset" value="重置">
+
+       <h4>9. type = hidden 隐藏操作</h4>
+       <input type="hidden" name="order" value="111000001">
+       <input type="text" style="display: none">
+       <input type="text" style="visibility: hidden">
+
+       <h4>10. 多行输入文本 textArea</h4>
+       留言: <textarea name="message" id="" cols="20" rows="20"></textarea>
+
+       <h4>11. 选择下拉框select</h4>
+       <select name="gender" id="gg">
+           <option value="" checked></option>
+           <option value="0">男</option>
+           <option value="1">女</option>
+           <option value="2">其它</option>
+       </select>
+
+       <h3>12. 新增type类型</h3>
+       <input type="color"><br>
+       date:
+       <input type="date"><br>
+       dateTime:
+       <input type="datetime"><br>
+       dateTimeLocal:
+       <input type="datetime-local"><br>
+       month:
+       <input type="month"><br>
+       week:
+       <input type="week"><br>
+       time:
+       <input type="time"><br>
+       email:
+       <input type="email"><br>
+       number:
+       <input type="number"><br>
+       range:
+       <input type="range"><br>
+       search:
+       <input type="search"><Br>
+       tel:
+       <input type="tel"><br>
+       url:
+       <input type="url"><br>
+
+       <label for="upfile">文件上床</label>
+       <input type="file" id="upfile">
+   </form>
+</body>
+</html>
