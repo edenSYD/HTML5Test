@@ -1,0 +1,52 @@
+<!--Create by syd on 2018/9/28 10:43.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        mark{
+            /*tarnsparent 透明色*/
+            /*background-color: transparent;*/
+        }
+        .wbr_c{
+            width: 150px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+   <!--mark：标记，突出显示文本-->
+   <p><mark>今天</mark>是个好天气</p>
+   <!--显示电池条-->
+   <meter value="15" min="10" max="100" high="70" low="20">浏览器不支持</meter>
+   <!--进度条-->
+   <progress value="50" max="100" min="50"></progress>
+
+   <p class="wbr_c">I am a loag words hahhahahhahahhhaaahahah.</p>
+<p class="wbr_c">I am a loag words hahhahahhahahhha<wbr>aahahahs</p>
+<!--注释标题-->
+   <ruby>你好<rt>ni hao</rt>&nbsp;爱惜吧<rt>叹气</rt></ruby>
+   <form action="" method="post" id="top_form">
+       <input type="text" name="key" id="key" value="" list="gender_list">
+       <datalist id="gender_list">
+           <option value="1">男</option>
+           <option value="2">女</option>
+           <option value="3">其它</option>
+       </datalist>
+       <select name="">
+           <option value="">男</option>
+           <option value="">女</option>
+       </select>
+       <input type="submit" value="提交" name="submit" id="">
+   </form>
+   <!--折叠信息-->
+   <details open="">
+       <summary>电脑配置</summary>
+       <p>内存: 16g</p>
+       <p>双卡双待</p>
+   </details>
+</body>
+</html>
