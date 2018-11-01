@@ -1,27 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!--设置关键字-->
-    <meta name="keyword" content="html,关键字,元信息">
-    <!--设置页面描述-->
-    <meta name="description" content="关于html使用的网站">
-    <!--设置编辑工具-->
-    <meta name="generator" content="WebService 2018.1">
-    <!--设置作者信息-->
-    <meta name="author" content="eden">
-    <!--设置定时跳转任务-->
-    <meta http-equiv="refresh" content="3;url=http://www.mingribook.com">
-    <meta charset="UTF-8">
-    <title>简单的html5文件</title>
-    <style type="text/css">
-        body{background-repeat: repeat-x}
-    </style>
-</head>
-<!--设置全局文字颜色-->
-<body bgcolor="#0000ff" text="#ffffff" background="../img/beautiful.jpg">
-<h2 align="center">html 初露端倪</h2>
-<!--水平线标记-->
-<hr>
-<p>让我们一起体验超炫的html 旅程吧,本页面在3秒后跳转</p>
-</body>
-</html>
+<!-- liulinqiang 18/10/17 -->
+<template>
+    <div>
+        <div class="content-body">
+            <!-- 顶部，包括标题，操作按钮-->
+            <div class="bd-top">
+                <div class="md clearfix">
+                    <!-- 1、左边标题 -->
+                    <div class="md-left">
+                        <h5>接口授权</h5>
+                    </div>
+                    <!-- 2、右边操作按钮 -->
+                    <div class="md-right">
+                    </div>
+                </div>
+            </div>
+            <div class="bd-main">
+                <el-table :data="tb.data" highlight-current-row tooltip-effect="dark" height="500" v-loading="loading"
+                          element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
+                    <el-table-column type="selection" width="55" fixed="left" v-if="tb.selectionBtn">
+                    </el-table-column>
+                    <el-table-column v-for="field in tb.fields" align="center" :prop="field.key" :label="field.label" :width="field.width"
+                                     :key="field.id" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column label="操作" width="200" align="center" v-if="tb.OperationBtn" fixed="right">
+                        <template slot-scope="scope">
+                            <el-button :type="btn.type" :size="btn.size" v-for="(btn,index) in tb.OperationBtn" :key="btn.key" v-if="btn.isShow"
+                                       @click="HandleClick(scope,btn,index)">
+                                {{btn.name}}
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination small layout="sizes, total, prev, pager, next, jumper" :total="total" :page-sizes="[15, 50, 100]"
+                               :page-size="conditionForm.pageSize" :current-page.sync="conditionForm.currentPage" @current-change="changePage"
+                               @size-change="changeSize">
+                </el-pagination>
+            </div>
+        </div>
+        <el-dialog :title="title" :visible.sync="dialogVisible" @close="close" class="dialog-main" v-if="dialogVisible" >
+            <el-form :model="formData" ref="form" :label-width="this.$util.LABEL_WIDTH">
+                <el-form-item :rules="[{ required: true, message: '请选择日期区间', trigger: 'change' }]" label="日期区间" prop="time">
+                    <el-date-picker v-model="formData.time" type="daterange" @change="dateChange" range-separator="-" start-placeholder="开始日期"
+                                    end-placeholder="结束日期" value-format="yyyy-MM-dd">
+                    </el-date-picker>
+                </el-form-item>
+                <div class="form-btns">
+                    <el-button size="medium" @click="close">取消</el-button>
+                    <el-button type="primary" size="medium" @click="submit">确定</el-button>
+                </div>
+            </el-form>
+        </el-dialog>
+    </div>
+</template>
+
+<script>
+
+    export default {
+        methods: {
+            // 禁用 激活 修改 授权操作的方法
+            HandleClick(scope, btn, index) {
+                switch (index) {
+                    case 0:
+                        this.formData = {
+                            startTime: '',
+                            endTime: '',
+                            accountCode: this.conditionForm.accountCode,
+                            accountId: this.conditionForm.accountId,
+                            serviceCode: scope.row.serviceCode,
+                            serviceId: scope.row.serviceId
+                        };
+                        this.title = "授权";
+                        this.dialogVisible = true;
+                        break;
+                    case 1:
+                        this.formData = {
+                            id: scope.row.businessAuthId,
+                            startTime: '',
+                            endTime: ''
+                        };;
+                        this.title = "修改";
+                        this.dialogVisible = true;
+                        break;
+                    case 2:
+                        this.formData = {
+                            id: scope.row.businessAuthId,
+                            status: 1
+                        };
+                        this.changeInterface('禁用成功', 2);
+                        break;
+                    case 3:
+                        this.formData = {
+                            id: scope.row.businessAuthId,
+                            status: 0
+                        };
+                        this.changeInterface('激活成功', 3);
+                        break;
+                }
+            },
+            // 关闭弹窗
+            close() {
+                this.dialogVisible = false;
+            },
+            // 日期选择
+            dateChange(arr) {
+                if (arr) {
+                    this.formData.startTime = arr[0];
+                    this.formData.endTime = arr[1];
+                } else {
+                    this.formData.startTime = '';
+                    this.formData.endTime = ''
+                }
+            },
+            // 调用修改的接口
+            changeInterface(text, index) {
+                this.$axios
+                    .post("/api/sponsor/apiUser/updateBusinessAuth", this.formData)
+                    .then(res => {
+                        if (res.data.code == 0) {
+                            this.$message.success(text);
+                            if (index < 2) {
+                                this.close();
+                            }
+                            this.getList()
+                        } else {
+                            this.$util.failCallback(res.data, this);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+            // 授权和修改提交
+            submit() {
+                this.$refs.form.validate((valid) => {
+                    if (!valid) return false;
+                    if (this.title == '授权') {
+                        this.authMethod();
+                    } else {
+                        this.changeInterface('修改成功', 1);
+                    }
+                })
+            },
+            // 单独调用授权
+            authMethod(){
+                this.$axios
+                    .post("/api/sponsor/apiUser/addBusinessAuth", this.formData)
+                    .then(res => {
+                        if (res.data.code == 0) {
+                            this.$message.success('授权成功');
+                            this.dialogVisible = false;
+                            this.getList()
+                        } else {
+                            this.$util.failCallback(res.data, this);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+
+
+        },
+        created() {
+            this.conditionForm.accountId = decodeURI(this.$route.query.id);
+            this.getList();
+        }
+    }
+
+</script>
+

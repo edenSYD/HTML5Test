@@ -1,16 +1,272 @@
 <!--Create by syd on 2018/9/4 17:07.-->
-<html>
+<html len="en">
 <header>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/src/css/main.css">
+    <title>Vue之入门HelloWorld</title>
+    <!--引入Vue库-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/stylesheet">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </header>
 <body>
-<div id="">
-    <p>{{}}</p>
-    </div>
-    <script src="../js/js_vue01.js"></script>
+   <!--创建一个div-->
+   <div id="app">
+       <!-- Vue数据绑定 v-text取值 -->
+       <!-- vue.js语法模板 -->
+       <p v-text="message"></p>
+       <!-- 输出HTML文件--html文件绑定属性 -->
+       <h2 :class="htmlMessage">v-bind:进行属性绑定</h2>
+       <!-- vue.js多属性绑定 -->
+       <h2 :id="vid" :class="vClass" :title="vTitle">vue多属性绑定</h2>
+
+       <!-- vue.js计算属性 -->
+       <div>
+           a = {{a}},b = {{b}},message = {{message}}
+       </div>
+       <el-table
+           :data="tableData"
+           style="width: 100%">
+           <el-table-column
+               label="日期"
+               width="180">
+               <template slot-scope="scope">
+                   <i class="el-icon-time"></i>
+                   <span style="margin-left: 10px">{{ scope.row.date }}</span>
+               </template>
+           </el-table-column>
+           <el-table-column
+               label="姓名"
+               width="180">
+               <template slot-scope="scope">
+                   <el-popover trigger="hover" placement="top">
+                       <p>姓名: {{ scope.row.name }}</p>
+                       <p>住址: {{ scope.row.address }}</p>
+                       <div slot="reference" class="name-wrapper">
+                           <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                       </div>
+                   </el-popover>
+               </template>
+           </el-table-column>
+           <el-table-column label="操作">
+               <template slot-scope="scope">
+                   <el-button
+                       size="mini"
+                       @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                   <el-button
+                       size="mini"
+                       type="danger"
+                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+               </template>
+           </el-table-column>
+       </el-table>
+       <div v-if="isLogin">你好</div>
+       <div v-else>请登录后再操作</div>
+       <div v-show="isLogin">你好</div>
+       <div v-if="type === 'A'">A</div>
+       <div v-else-if="type === 'B'">B</div>
+       <div v-else-if="type === 'C'">C</div>
+       <div v-else>Not A/B/C</div>
+       <div class="ui-li">
+           <ul>
+               <li v-for="item in items"><h5 v-text="item"></h5></li>
+           </ul>
+       </div>
+       <div>
+           <ul>
+               <li v-for="(value,key,index) in object">{{index}}.{{key}}.{{value}}</li>
+           </ul>
+       </div>
+       <div>本场得分:{{count}}</div>
+       <button @click="add">加分</button>
+       <!-- v-model 初始化-->
+       <div>
+           <input type="text" v-model="message"><br>
+           <textarea cols="30" rows="10" v-model="message"></textarea>
+           <input type="checkbox" :id="first" value="1" v-model="status">
+           <label for="first">有效</label>
+           <input type="checkbox" :id="second" value="2" v-model="status">
+           <label for="second">无效</label>
+           <div>状态:{{status}}</div>
+       </div>
+       <div>
+           <input type="radio" id="one" value="男" v-model="sex">
+           <label for="one">男</label>
+           <input type="radio" id="two" value="女" v-model="sex">
+           <label for="two">女</label>
+           <div>性别:{{sex}}</div>
+       </div>
+       <div>
+           <select v-model="selected">
+               <option disabled value="">请选择</option>
+               <option v-for="item in choice">{{item}}</option>
+           </select>
+           <div>Selected: {{selected}}</div>
+       </div>
+       <!-- 动态赋值 -->
+       <div>
+           <img :src="imgSrc" width="200px">
+       </div>
+       <!-- 输出原始值 -->
+       <div v-pre>{{message}}</div>
+       <div v-cloak>{{message}}</div>
+       <div v-once>第一次绑定的值:{{message}}</div>
+   </div>
+
+   <!-- JS -->
+   <script type="text/javascript">
+       var app = new Vue({ // 创建Vue对象
+           el: '#app', // #app是id选择器,把当前Vue挂载到div上
+           data (){  // Vue中绑定的数据
+               return {
+                   message: 'hello Vue!',
+                   htmlMessage: "content",
+                   vid:"myId",
+                   vClass:"myClass",
+                   vTitle:"vue 多属性",
+                   isLogin: true,
+                   type: 'A',
+                   items: [20,23,18,65],
+                   object: {firstName:'john',lastName:'Doe'},
+                   count: 1,
+                   status: [],
+                   sex: '男',
+                   selected: '',
+                   choice: ['A','B','C','D','E'],
+                   imgSrc:'http://liangxinghua.com/uploads/image/20180709/1531106987.png',
+                   price: '3',
+                   a: 1,
+                   tableData: [{
+                       date: '2016-05-02',
+                       name: '王小虎',
+                       address: '上海市普陀区金沙江路 1518 弄'
+                   }, {
+                       date: '2016-05-04',
+                       name: '王小虎',
+                       address: '上海市普陀区金沙江路 1517 弄'
+                   }, {
+                       date: '2016-05-01',
+                       name: '王小虎',
+                       address: '上海市普陀区金沙江路 1519 弄'
+                   }, {
+                       date: '2016-05-03',
+                       name: '王小虎',
+                       address: '上海市普陀区金沙江路 1516 弄'
+                   }]
+
+               }
+           },
+           beforeCreate: function () {
+               console.group('beforeCreate 创建前状态===============》');
+               console.log("%c%s", "color:red" , "el      : " + this.$el); //undefined
+               console.log("%c%s", "color:red","data    : " + this.$data); //undefined
+               console.log("%c%s", "color:red","message: " + this.message)
+           },
+           created: function () {
+               console.group('created 创建完毕状态===============》');
+               console.log("%c%s", "color:red","el      : " + this.$el); //undefined
+               console.log("%c%s", "color:red","data    : " + this.$data); //已被初始化
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化
+           },
+           beforeMount: function () {
+               console.group('beforeMount 挂载前状态===============》');
+               console.log("%c%s", "color:red","el      : " + (this.$el)); //已被初始化
+               console.log(this.$el);
+               console.log("%c%s", "color:red","data    : " + this.$data); //已被初始化
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化
+           },
+           mounted: function () {
+               console.group('mounted 挂载结束状态===============》');
+               console.log("%c%s", "color:red","el      : " + this.$el); //已被初始化
+               console.log(this.$el);
+               console.log("%c%s", "color:red","data    : " + this.$data); //已被初始化
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化
+           },
+           beforeUpdate: function () {
+               console.group('beforeUpdate 更新前状态===============》');
+               console.log("%c%s", "color:red","el      : " + this.$el);
+               console.log(this.$el);
+               console.log("%c%s", "color:red","data    : " + this.$data);
+               console.log("%c%s", "color:red","message: " + this.message);
+           },
+           updated: function () {
+               console.group('updated 更新完成状态===============》');
+               console.log("%c%s", "color:red","el      : " + this.$el);
+               console.log(this.$el);
+               console.log("%c%s", "color:red","data    : " + this.$data);
+               console.log("%c%s", "color:red","message: " + this.message);
+           },
+           beforeDestroy: function () {
+               console.group('beforeDestroy 销毁前状态===============》');
+               console.log("%c%s", "color:red","el      : " + this.$el);
+               console.log(this.$el);
+               console.log("%c%s", "color:red","data    : " + this.$data);
+               console.log("%c%s", "color:red","message: " + this.message);
+           },
+           destroyed: function () {
+               console.group('destroyed 销毁完成状态===============》');
+               console.log("%c%s", "color:red","el      : " + this.$el);
+               console.log(this.$el);
+               console.log("%c%s", "color:red","data    : " + this.$data);
+               console.log("%c%s", "color:red","message: " + this.message)
+           },
+           // 计算属性
+           computed: {
+               newPrice(){
+                   return '￥' + this.price + '元'
+               },
+               b(){
+                   return this.a + 1;
+               },
+
+               message_methods:{
+                   get() {
+                       return this.message;
+                   },
+                   set(newValue) {
+                      this.message = newValue;
+                   }
+               }
+           },
+           // 事件绑定方法
+           methods: {
+               add(){
+                   this.count++;
+               },
+               add(num){
+                   this.count++;
+               },
+               handleEdit(index, row) {
+                   console.log(index, row);
+               },
+               handleDelete(index, row) {
+                   console.log(index, row);
+               }
+           },
+           // 观察者
+           watch:{
+               question(val,oldVal){
+                   console.log('new:%s,old:%s',val,oldVal);
+               }
+           },
+           // 过滤器
+           filters:{
+               filterA(value){
+                   return value.toUpperCase();
+               }
+           }
+
+       })
+       app.message = 'setter message newValue';
+   </script>
+
 </body>
 </html>
+
+
 
 
 
