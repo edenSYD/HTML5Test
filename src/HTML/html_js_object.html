@@ -1,0 +1,33 @@
+<!--Create by syd on 2018/11/1 11:22.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var xiaoming = {
+           name: '小明',
+           birth: '1990.10.10',
+           school: 'NO.1 Middle school',
+           height: 1.70,
+           weight: 75,
+           score: null,
+           'Middle-school':'NO.1 Middle school' // 特殊字符串
+        }
+        console.log(xiaoming.name);
+        console.log(xiaoming.birth);
+        delete xiaoming["Middle-school"]; //删除一个属性
+        delete xiaoming.score;//删除一个属性
+        console.log(xiaoming.score);
+        //判断有没有某一个属性
+        if (xiaoming.hasOwnProperty('name')){
+            console.log('xiaoming是有名字的');
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

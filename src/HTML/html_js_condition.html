@@ -1,0 +1,49 @@
+<!--Create by syd on 2018/11/1 11:54.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<script>
+    var age = 20;
+    if (age >= 18){
+        console.log('可以办身份证了');
+    }else {
+        console.log('哈哈,还未成年');
+    }
+    //循环
+    var sum = 0;
+    var i;
+    for (i = 1;i<= 100;i++){
+        sum = sum + i;
+    }
+    console.log(sum);
+
+    var fruits = ["Apple","Google","Microsoft"];
+    var i,x;
+    for (i =0;i<fruits.length;i++){
+        x = fruits[i];
+        console.log(x);
+    }
+    // for in循环
+    var o = {
+        name: 'jack',
+        age: 20,
+        city: 'beijing'
+    };
+    for (var key in o){
+        console.log(o[key]);
+    }
+    var users = ["Bart","Lisa","Adam"];
+    for (i = 0;i<users.length;i++){
+        console.log('Hello,'+users[i]);
+    }
+
+</script>
+</body>
+</html>
