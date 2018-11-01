@@ -1,0 +1,32 @@
+<!--Create by syd on 2018/11/1 14:27.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<script>
+    // var m = new Map();
+    // var s = new Set();
+    console.log('浏览器支持map和set');
+    var names = ["lily","eden","seven"];
+    var scores = [95,75,85];
+    var m = new Map([["lily",95],["eden",75],["seven",85]]);
+    console.log(m.get("lily"));
+    m.set('Adam',67);
+    m.has('Bob');
+    m.delete('eden');
+    m.get('Adam');
+    console.log(m);
+    // key的集合,数据不能重复
+    var s = new Set([1,2,3],[1,2],[3]);
+    console.log(s);
+    s.add(4);
+
+</script>
+</body>
+</html>
