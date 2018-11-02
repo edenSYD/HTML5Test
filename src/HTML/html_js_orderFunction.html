@@ -46,6 +46,26 @@
     } else {
         console.log('测试失败');
     }
+    console.log(arr2.map(String));
+
+    // 过滤操作
+    var arr3 = [1,2,4,5,6,9,10,15];
+    var r = arr3.filter(function (x) {
+        return x %2 !== 0;
+    })
+    console.log(r);
+    // 去掉空字符串
+    var arr4 = ["A","","B",null,undefined,"C"," "];
+    var a4 = arr4.filter(function (s) {
+        return s && s.trim();
+    });
+    console.log(a4);
+    //去重操作
+    var fruits = ['apple', 'strawberry', 'banana', 'pear', 'apple', 'orange', 'orange', 'strawberry'];
+    var fs = fruits.filter(function (element,index,self) {
+        return self.indexOf(element) === index;
+    })
+    console.log(fs);
 
 </script>
 </body>
