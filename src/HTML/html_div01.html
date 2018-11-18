@@ -1,0 +1,13 @@
+<el-form ref="conditionForm" :model="conditionForm" :label-width="this.$util.LABEL_WIDTH" label-position="left" class="condition-form1" size="mini">
+    <div class="el-col fixed-width">
+        <el-form-item label="商户" prop="company" label-width="40px">
+            <el-select v-model="conditionForm.company" prop="company" @change="getValue">
+                <el-option label="All" value=""></el-option>
+                <el-option v-for="item in companySignList" :label="item.name" :value="item.code" :key="item.id"></el-option>
+            </el-select>
+        </el-form-item>
+    </div>
+</el-form>
+
+
+

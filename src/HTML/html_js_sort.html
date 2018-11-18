@@ -1,42 +1,34 @@
-<!--Create by syd on 2018/11/1 19:13.-->
-
-
+<!--Create by syd on 2018/11/2 11:46.-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sort</title>
+    <title>箭头函数</title>
 </head>
 <body>
-<script>
-    var arr = ["Google","Apple","Microsoft"];
-    console.log(arr.sort());
-    var arr2 = [10,20,1,2];
-    console.log(arr2.sort());
+  <script>
+      var obj = {
+          birth:1990,
+          getAge: function () {
+              // this 指向语法作用域---外层调用者
+              var b = this.birth;
+              var fn =  () => new Date().getFullYear() - this.birth;
+              return fn();
+          }
+      };
+      console.log(obj.getAge());
+      function foo(x) {
+          return x + x;
+      }
+      var r = foo(1);
+      console.log(r);
+      // 生成器ES6新语法
+      function* foo(x) {
+        yield x + 1;
+        yield x + 2;
+        yield x + 3;
+      }
 
-    var arr3 = [10,20,2,1];
-    arr3.sort(function (x,y) {
-        if (x < y){
-            return false;
-        }
-        if (x > y){
-            return true;
-        }
-    })
-    console.log(arr3);
-
-    arr.sort(function (s1,s2) {
-        x1 = s1.toUpperCase();
-        x2 = s2.toUpperCase();
-        if (x1 < x2){
-            return false;
-        }
-        if (x1 > x2){
-            return true;
-        }
-        return 0;
-    });
-    console.log(arr);
-</script>
+  </script>
 </body>
 </html>
